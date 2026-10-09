@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yehia AI</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b0b12;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background: #11111b;
+    padding: 25px 18px;
+    border-right: 1px solid #272737;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #a78bfa;
+}
+
+.logo span {
+    color: white;
+}
+
+.new-chat {
+    background: #7c3aed;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.new-chat:hover {
+    background: #6d28d9;
+}
+
+.side-label {
+    color: #85859a;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.side-info {
+    color: #b8b8cc;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.profile {
+    margin-top: auto;
+    padding: 14px;
+    background: #1b1b29;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100vh;
+}
+
+.topbar {
+    height: 70px;
+    padding: 0 25px;
+    border-bottom: 1px solid #272737;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.model {
+    color: #b8b8cc;
+    font-size: 13px;
+    background: #191925;
+    padding: 9px 13px;
+    border-radius: 20px;
+}
+
+.status {
+    color: #4ade80;
+    font-size: 13px;
+}
+
+.chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px 20px;
+}
+
+.welcome {
+    text-align: center;
+    max-width: 650px;
+    margin: 9vh auto 35px;
+}
+
+.robot {
+    width: 75px;
+    height: 75px;
+    border-radius: 24px;
+    margin: 0 auto 22px;
+    background: linear-gradient(135deg, #7c3aed, #c084fc);
+    display: grid;
+    place-items: center;
+    font-size: 35px;
+    box-shadow: 0 0 40px #7c3aed35;
+}
+
+.welcome h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    margin-bottom: 14px;
+}
+
+.welcome h1 span {
+    color: #a78bfa;
+}
+
+.welcome p {
+    color: #9999b0;
+    line-height: 1.7;
+}
+
+.suggestions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.suggestion {
+    background: #151521;
+    color: #ddddee;
+    border: 1px solid #303044;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: left;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.suggestion:hover {
+    border-color: #8b5cf6;
+    background: #1c1930;
+}
+
+.messages {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.message {
+    padding: 15px 18px;
+    margin: 14px 0;
+    border-radius: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.user {
+    background: #38216b;
+    margin-left: auto;
+    max-width: 85%;
+    width: fit-content;
+}
+
+.bot {
+    background: #171722;
+    border: 1px solid #2b2b3c;
+    margin-right: auto;
+    max-width: 90%;
+}
+
+.sender {
+    color: #c4b5fd;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.composer {
+    padding: 15px 20px 22px;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #171722;
+    border: 1px solid #343448;
+    border-radius: 16px;
+    padding: 8px 10px 8px 16px;
+}
+
+.input-box:focus-within {
+    border-color: #8b5cf6;
+}
+
+.input-box input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 12px 0;
+    font-size: 15px;
+}
+
+.input-box input::placeholder {
+    color: #77778e;
+}
+
+.send {
+    width: 43px;
+    height: 43px;
+    border: none;
+    border-radius: 12px;
+    background: #7c3aed;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.send:hover {
+    background: #6d28d9;
+}
+
+.send:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.disclaimer {
+    color: #77778b;
+    font-size: 11px;
+    text-align: center;
+    margin-top: 12px;
+}
+
+@media (max-width: 650px) {
+    .sidebar {
+        display: none;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .chat {
+        padding: 20px 14px;
+    }
+
+    .welcome {
+        margin-top: 6vh;
+    }
+
+    .suggestions {
+        grid-template-columns: 1fr;
+    }
+
+    .composer {
+        padding: 10px 12px 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <div class="logo">Yehia <span>AI</span></div>
+
+    <button class="new-chat" id="newChat">+ New Chat</button>
+
+    <div>
+        <div class="side-label">YOUR ASSISTANT</div>
+        <div class="side-info">
+            Ask questions<br>
+            Learn new things<br>
+            Write and create<br>
+            Explore ideas
+        </div>
+    </div>
+
+    <div class="profile">
+        <div>🤖 Yehia AI</div>
+        <div style="color:#9999b0;margin-top:6px">
+            Personal AI Assistant
+        </div>
+    </div>
+</aside>
+
+<main class="main">
+    <header class="topbar">
+        <div style="font-weight:bold">Yehia AI</div>
+        <div class="model">Basic Demo</div>
+    </header>
+
+    <section class="chat" id="chat">
+        <div class="welcome" id="welcome">
+            <div class="robot">✦</div>
+            <h1>Hello, I'm <span>Yehia AI</span></h1>
+            <p>
+                Your personal AI assistant.<br>
+                What would you like to explore today?
+            </p>
+        </div>
+
+        <div class="suggestions" id="suggestions">
+            <button class="suggestion"
+                data-prompt="Explain artificial intelligence simply.">
+                💡 Explain artificial intelligence
+            </button>
+
+            <button class="suggestion"
+                data-prompt="Help me learn programming as a beginner.">
+                💻 Learn programming
+            </button>
+
+            <button class="suggestion"
+                data-prompt="Give me a creative project idea.">
+                🚀 Discover a project idea
+            </button>
+
+            <button class="suggestion"
+                data-prompt="Write a short story about a robot.">
+                ✍️ Write a short story
+            </button>
+        </div>
+
+        <div class="messages" id="messages"></div>
+    </section>
+
+    <form class="composer" id="chatForm">
+        <div class="input-box">
+            <input
+                id="userInput"
+                type="text"
+                placeholder="Message Yehia AI..."
+                autocomplete="off"
+                maxlength="2000"
+                required
+            >
+            <button class="send" id="sendButton"
+                type="submit" aria-label="Send message">↑</button>
+        </div>
+        <p class="disclaimer">
+            Yehia AI Demo · Responses are generated locally by simple rules.
+        </p>
+    </form>
+</main>
+
+<script>
+const form = document.getElementById("chatForm");
+const input = document.getElementById("userInput");
+const messages = document.getElementById("messages");
+const welcome = document.getElementById("welcome");
+const suggestions = document.getElementById("suggestions");
+const newChat = document.getElementById("newChat");
+const sendButton = document.getElementById("sendButton");
+
+function addMessage(text, sender) {
+    const message = document.createElement("div");
+    message.className = "message " + sender;
+
+    const label = document.createElement("div");
+    label.className = "sender";
+    label.textContent = sender === "user" ? "YOU" : "YEHIA AI";
+
+    const content = document.createElement("div");
+    content.textContent = text;
+
+    message.appendChild(label);
+    message.appendChild(content);
+    messages.appendChild(message);
+
+    document.getElementById("chat").scrollTop =
+        document.getElementById("chat").scrollHeight;
+}
+
+function getReply(text) {
+    const q = text.toLowerCase().trim();
+
+    if (/^(hi|hello|hey|مرحبا|اهلا|أهلا|السلام عليكم)/i.test(q)) {
+        return "Hello! 👋 I'm Yehia AI, your personal assistant. How can I help you today?";
+    }
+
+    if (q.includes("your name") || q.includes("اسمك")) {
+        return "My name is Yehia AI! Nice to meet you. 🤖";
+    }
+
+    if (q.includes("who are you") || q.includes("من انت") || q.includes("مين انت")) {
+        return "I'm Yehia AI, a demo of a personal AI assistant built with HTML, CSS, and JavaScript.";
+    }
+
+    if (q.includes("artificial intelligence") || q.includes("الذكاء الاصطناعي")) {
+        return "Artificial intelligence (AI) is technology that allows computers to perform tasks such as understanding language, recognizing patterns, and generating content. This demo does not contain a real AI model yet.";
+    }
+
+    if (q.includes("programming") || q.includes("برمجة")) {
+        return "Great choice! 💻 Start with HTML to build web pages, CSS to style them, and JavaScript to make them interactive. Practice by building small projects every day.";
+    }
+
+    if (q.includes("project") || q.includes("مشروع")) {
+        return "Here is a project idea: build a personal task manager with a clean design, the ability to add tasks, and a way to mark them as completed. You can make it using HTML, CSS, and JavaScript.";
+    }
+
+    if (q.includes("story") || q.includes("قصة")) {
+        return "One day, a little robot named Yehia discovered a mysterious star. Instead of keeping it for himself, he used its light to help a lost traveler find the way home. From that day on, he became known as the friendliest robot in the galaxy. ✨";
+    }
+
+    if (q.includes("help") || q.includes("مساعدة")) {
+        return "Of course! I can demonstrate simple replies about programming, AI, project ideas, and stories. For answers to general questions, this demo needs a real AI model connected to it.";
+    }
+
+    return "Thanks for your message! 😊 I'm currently running in demo mode, so I can only give a few predefined replies. Connect Yehia AI to a real language model to answer a wider range of questions.";
+}
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const text = input.value.trim();
+    if (!text) return;
+
+    welcome.style.display = "none";
+    suggestions.style.display = "none";
+
+    addMessage(text, "user");
+    input.value = "";
+    sendButton.disabled = true;
+
+    window.setTimeout(function() {
+        addMessage(getReply(text), "bot");
+        sendButton.disabled = false;
+        input.focus();
+    }, 350);
+});
+
+suggestions.addEventListener("click", function(event) {
+    const button = event.target.closest("[data-prompt]");
+    if (!button) return;
+
+    input.value = button.dataset.prompt;
+    form.requestSubmit();
+});
+
+newChat.addEventListener("click", function() {
+    messages.replaceChildren();
+    welcome.style.display = "block";
+    suggestions.style.display = "grid";
+    input.value = "";
+    input.focus();
+});
+
+</script>
+
+</body>
+</html>
